@@ -1,0 +1,22 @@
+.container.tabela{
+    max-width: 1500px;
+    margin: 100px 95px;
+    box-shadow: 0 0 1em gray;
+    padding: 3% 3%;
+}
+.table-borderless{
+  margin-top: 2%;
+  margin-left: 5%;
+}
+.icone {
+  font-size: 1.5rem;
+  margin-right: 1%;
+}
+.titulo{
+  color: #666666;
+}
+.acoes i{
+  padding: 0% 5% 0% 0%;
+}
+
+
