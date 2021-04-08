@@ -1,7 +1,21 @@
+<form method="POST" #frm="ngForm" (ngSubmit)="adicionar(frm)">
+  <div class="form-group">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento" name="Nome" [(ngModel)]="departamento.Nome" required/>
+    </div>
+    <div class="mb-3">
+      <label for="sigla" class="form-label">Sigla</label>
+      <input type="email" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name= "Sigla" [(ngModel)]="departamento.Sigla" required>
+    </div>
+  </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
+</form>
+
 <div class="container tabela">
   <h2 class="titulo"><i class="bi bi-chevron-double-right icone"></i>Departamento</h2>
-
-  <!-- <button class="btn btn-outline-primary mb-2 mr-2" (click)="modal(add)">Add</button> -->
+  <!-- <button class="btn btn-outline-primary mb-2 mr-2 adicionar" (click)="modal(add)">Add</button> -->
   <hr />
   <table class="table table-borderless">
     <thead>
@@ -22,18 +36,28 @@
     </tbody>
   </table>
 </div>
-
+<!--
 <ng-template #add let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Modal title</h4>
-    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+    <h4 class="modal-title">Cadastrar departamento</h4>
+    <button type="button" class="close" aria-label="Close">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <p>One fine body&hellip;</p>
-  </div>
-  <div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
-  </div>
-</ng-template>
+  <form method="POST" #frm="ngForm" (ngSubmit)="adicionar(frm)">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento"  name= "departamento.nome" ngModel required/>
+      </div>
+      <div class="mb-3">
+        <label for="sigla" class="form-label">Sigla</label>
+        <input type="email" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name= "departamento.sigla" ngModel required>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
+    </div>
+  </form>
+</ng-template> -->
