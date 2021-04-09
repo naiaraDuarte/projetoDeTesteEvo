@@ -18,6 +18,7 @@ export class DepartamentoComponent implements OnInit {
   data: Array<any>;
   closeResult: string;
   departamento: any;
+  id: number;
 
   constructor(private CrudService: CrudService, private modalService: NgbModal) {
     this.getter();
@@ -32,8 +33,6 @@ export class DepartamentoComponent implements OnInit {
 
     this.CrudService.getDepartamentos().subscribe((data: Mdepartamento) => {
       this.departamentos = data;
-      console.log('depDATSA', data);
-      console.log('dep', this.departamentos);
     }, (error: any) => {
       this.erro = error;
       console.error(error);
@@ -42,11 +41,44 @@ export class DepartamentoComponent implements OnInit {
   }
 
   adicionar(frm: FormGroup){
-    console.log("TESTE", this.departamento);
-    this.CrudService.addDepartamentos(this.departamento).subscribe((data: Mdepartamento) => {
-      //this.departamentos = data;
-      console.log("RESPOSTAAAAAAAAA", data);
-      frm.reset();
+    if(this.id == null){
+      this.CrudService.addDepartamentos(this.departamento).subscribe((data) => {
+        this.departamentos = data as string[];
+        frm.reset();
+      }, (error: any) => {
+        this.erro = error;
+        console.error(error);
+      });
+    }else{
+      this.CrudService.atualiza(this.departamento, this.id).subscribe((data) => {
+        this.departamentos = data as string[];
+        frm.reset();
+      }, (error: any) => {
+        this.erro = error;
+        console.error(error);
+      });
+    }
+
+  }
+
+  seleciona(el){
+    this.id = parseInt(el.dataset.departamentoid);
+    console.log("id", this.id);
+    this.CrudService.selecionaComId(this.id).subscribe((data: Mdepartamento) => {
+      console.log("seleciona", data);
+      this.departamentos = data;
+
+    }, (error: any) => {
+      this.erro = error;
+      console.error(error);
+    });
+  }
+
+  excluir(el){
+    this.id = parseInt(el.dataset.departamentoid);
+    this.CrudService.excluirDepartamentos(this.id).subscribe((data: Mdepartamento) => {
+      this.departamentos = data;
+
     }, (error: any) => {
       this.erro = error;
       console.error(error);

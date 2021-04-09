@@ -18,12 +18,31 @@ export class CrudService {
     return this.http.get(this.departamentoUrl);
   }
 
+  //colocar o tipo ao inves do any
   public addDepartamentos(departamento: any){
     const HttpHeader = new HttpHeaders({
       'content-type': 'application/json'
     })
 
     return this.http.post(this.departamentoUrl, departamento, {headers: HttpHeader});
+  }
+
+  public selecionaComId(id): Observable<any>{
+    return this.http.get(this.departamentoUrl + '/' + id);
+  }
+
+  public atualiza(departamento: any, id:number): Observable<any>{
+    departamento.DepartamentoId = id;
+    console.log("Departamento", this.departamentoUrl + '/' + id, departamento);
+    const HttpHeader = new HttpHeaders({
+      'content-type': 'application/json'
+    })
+
+    return this.http.put(this.departamentoUrl + '/' + id, departamento, {headers: HttpHeader});
+  }
+
+  public excluirDepartamentos(id){
+    return this.http.delete(this.departamentoUrl + '/' + id);
   }
 
 }

@@ -2,15 +2,17 @@
   <div class="form-group">
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento" name="Nome" [(ngModel)]="departamento.Nome" required/>
+      <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento" name="Nome"
+        [(ngModel)]="departamento.Nome" value="{{departamentos.nome}}" required />
     </div>
     <div class="mb-3">
       <label for="sigla" class="form-label">Sigla</label>
-      <input type="email" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name= "Sigla" [(ngModel)]="departamento.Sigla" required>
+      <input type="email" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name="Sigla"
+        [(ngModel)]="departamento.Sigla" value="{{departamentos.sigla}}" required>
     </div>
   </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
+  <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
 </form>
 
 <div class="container tabela">
@@ -27,11 +29,19 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let i of departamentos">
+      <tr  #linha *ngFor="let i of departamentos" [attr.data-departamentoId]="i.departamentoId"(click)="seleciona($event)">
         <th scope="row">{{i.departamentoId}}</th>
         <td>{{i.nome}}</td>
         <td>{{i.sigla}}</td>
-        <td class="acoes"><i class="bi bi-pencil-fill"></i><i class="bi bi-trash-fill"></i></td>
+        <td class="acoes">
+          <button type="button" class="btn btn-secondary">
+            <i class="bi bi-pencil-fill" (click)="seleciona(linha)"></i>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <i class="bi bi-trash-fill" (click)="excluir(linha)"></i>
+          </button>
+          {{ i.text }}
+        </td>
       </tr>
     </tbody>
   </table>
