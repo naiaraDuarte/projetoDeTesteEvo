@@ -4,7 +4,7 @@ import { DepartamentoComponent } from './departamento/departamento.component';
 import { FuncionarioComponent } from './funcionario/funcionario.component';
 
 const routes: Routes = [
-  {path: 'funcionario', component: FuncionarioComponent },
+  {path: 'funcionario/:id', component: FuncionarioComponent },
   {path: 'departamento', component: DepartamentoComponent },
 ];
 

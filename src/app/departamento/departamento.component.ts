@@ -6,6 +6,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 import { formatCurrency } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-departamento',
@@ -20,8 +21,8 @@ export class DepartamentoComponent implements OnInit {
   departamento: any;
   id: number;
 
-  constructor(private CrudService: CrudService, private modalService: NgbModal) {
-    this.getter();
+  constructor(private CrudService: CrudService, private modalService: NgbModal, private router: Router) {
+    this.ObterRegistros();
   }
 
   ngOnInit() {
@@ -29,8 +30,12 @@ export class DepartamentoComponent implements OnInit {
     this.departamento.DepartamentoId = 0;
   }
 
-  getter(){
+  redireciona(el){
+    this.id = parseInt(el.dataset.departamentoid);
+    this.router.navigate(['/funcionario', this.id]);
+  }
 
+  ObterRegistros(){
     this.CrudService.getDepartamentos().subscribe((data: Mdepartamento) => {
       this.departamentos = data;
     }, (error: any) => {
@@ -40,28 +45,42 @@ export class DepartamentoComponent implements OnInit {
 
   }
 
-  adicionar(frm: FormGroup){
+  salvar(frm: FormGroup){
     if(this.id == null){
-      this.CrudService.addDepartamentos(this.departamento).subscribe((data) => {
-        this.departamentos = data as string[];
-        frm.reset();
-      }, (error: any) => {
-        this.erro = error;
-        console.error(error);
-      });
+      this.adicionar(frm);
     }else{
-      this.CrudService.atualiza(this.departamento, this.id).subscribe((data) => {
-        this.departamentos = data as string[];
-        frm.reset();
-      }, (error: any) => {
-        this.erro = error;
-        console.error(error);
-      });
+      this.atualizar(frm);
     }
 
   }
 
-  seleciona(el){
+  adicionar(frm){
+    this.CrudService.addDepartamentos(this.departamento).subscribe((data) => {
+       this.departamentos.push(data);
+      frm.reset();
+    }, (error: any) => {
+      this.erro = error;
+      console.error(error);
+    });
+  }
+
+  atualizar(frm){
+    this.CrudService.atualiza(this.departamento, this.id).subscribe((data) => {
+
+      const atualizaIndex = data ? this.departamentos.findIndex( d => data.DepartamentoId == d.DepartamentoId): -1;
+      if(atualizaIndex > -1){
+        this.departamentos[atualizaIndex] = data;
+      }
+      this.id = null;
+      this.ObterRegistros();
+      frm.reset();
+    }, (error: any) => {
+      this.erro = error;
+      console.error(error);
+    });
+  }
+
+  selecionar(el){
     this.id = parseInt(el.dataset.departamentoid);
     console.log("id", this.id);
     this.CrudService.selecionaComId(this.id).subscribe((data: Mdepartamento) => {
@@ -78,7 +97,7 @@ export class DepartamentoComponent implements OnInit {
     this.id = parseInt(el.dataset.departamentoid);
     this.CrudService.excluirDepartamentos(this.id).subscribe((data: Mdepartamento) => {
       this.departamentos = data;
-
+      this.ObterRegistros();
     }, (error: any) => {
       this.erro = error;
       console.error(error);

@@ -8,12 +8,14 @@ import { DepartamentoComponent } from './departamento/departamento.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
       FuncionarioComponent,
-      DepartamentoComponent
+      DepartamentoComponent,
+      UploadComponent
    ],
   imports: [
     BrowserModule,
