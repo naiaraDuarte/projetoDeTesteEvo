@@ -21,6 +21,7 @@ export class FuncionarioComponent implements OnInit {
   funcionario: any;
   id: number = null;
   DepartamentoId: number;
+  response = '';
 
   constructor(private CrudService: CrudFuncionarioService, private modalService: NgbModal, private route: ActivatedRoute) {
     this.DepartamentoId = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -31,7 +32,7 @@ export class FuncionarioComponent implements OnInit {
     this.funcionario = {};
     this.funcionario.funcionarioId = this.id;
     this.funcionario.departamentoId = this.DepartamentoId;
-    this.funcionario.foto = '';
+
   }
 
   carregarImagem(file: FileList){
@@ -67,7 +68,7 @@ export class FuncionarioComponent implements OnInit {
   }
 
   adicionar(frm){
-
+    this.funcionario.foto = this.response;
     this.CrudService.addFuncionario(this.funcionario).subscribe((data) => {
        this.funcionarios.push(data);
       frm.reset();
@@ -105,11 +106,23 @@ export class FuncionarioComponent implements OnInit {
     this.id = parseInt(el.dataset.funcionarioid);
     this.CrudService.excluirFuncionario(this.id).subscribe((data: Mfuncionario) => {
       this.funcionarios = data;
+      this.id = null;
       this.ObterRegistros();
     }, (error: any) => {
       this.erro = error;
       console.error(error);
     });
+  }
+
+  public uploadFinished = (event) => {
+
+    this.response = event.dbPath;
+    console.log("URLLLLL", this.response);
+
+  }
+
+  public createImgPath = (serverPath: string) => {
+    return `https://localhost:44363/${serverPath}`;
   }
 
 }

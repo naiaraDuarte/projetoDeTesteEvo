@@ -23,6 +23,7 @@ export class UploadComponent implements OnInit {
     formData.append('file', fileToUpload, fileToUpload.name);
     this.http.post('https://localhost:44363/api/Upload', formData, {reportProgress: true, observe: 'events'})
       .subscribe(event => {
+        console.log("RETORNO", event);
         if (event.type === HttpEventType.UploadProgress)
           this.progress = Math.round(100 * event.loaded / event.total);
         else if (event.type === HttpEventType.Response) {
