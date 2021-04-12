@@ -2,7 +2,7 @@ import { BsModalService } from 'ngx-bootstrap/modal';
 import { Mdepartamento } from './../models/departamento.models';
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../services/crud.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 import { formatCurrency } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -66,7 +66,6 @@ export class DepartamentoComponent implements OnInit {
 
   atualizar(frm){
     this.CrudService.atualiza(this.departamento, this.id).subscribe((data) => {
-
       const atualizaIndex = data ? this.departamentos.findIndex( d => data.DepartamentoId == d.DepartamentoId): -1;
       if(atualizaIndex > -1){
         this.departamentos[atualizaIndex] = data;
@@ -80,13 +79,13 @@ export class DepartamentoComponent implements OnInit {
     });
   }
 
-  selecionar(el){
+  selecionar(el, content){
+    this.modalService.open(content, { centered: true });
     this.id = parseInt(el.dataset.departamentoid);
     console.log("id", this.id);
-    this.CrudService.selecionaComId(this.id).subscribe((data: Mdepartamento) => {
+    this.CrudService.selecionaComId(this.id).subscribe((data) => {
       console.log("seleciona", data);
-      this.departamentos = data;
-
+      this.departamento = data;
     }, (error: any) => {
       this.erro = error;
       console.error(error);
@@ -104,8 +103,8 @@ export class DepartamentoComponent implements OnInit {
     });
   }
 
-  modal(add){
-    this.modalService.open(add, { centered: true });
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
   }
 
 }

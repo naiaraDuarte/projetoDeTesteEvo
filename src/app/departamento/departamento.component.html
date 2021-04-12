@@ -1,4 +1,4 @@
-<form method="POST" #frm="ngForm" (ngSubmit)="salvar(frm)">
+<!-- <form method="POST" #frm="ngForm" (ngSubmit)="salvar(frm)">
   <div class="form-group">
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
@@ -13,11 +13,11 @@
   </div>
 
   <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
-</form>
+</form> -->
 
 <div class="container tabela">
   <h2 class="titulo"><i class="bi bi-chevron-double-right icone"></i>Departamento</h2>
-  <!-- <button class="btn btn-outline-primary mb-2 mr-2 adicionar" (click)="modal(add)">Add</button> -->
+  <button class="btn btn-lg btn-outline-primary" (click)="openVerticallyCentered(content)">Add</button>
   <hr />
   <table class="table table-borderless">
     <thead>
@@ -35,7 +35,7 @@
         <td>{{i.sigla}}</td>
         <td class="acoes">
           <button type="button" class="btn btn-secondary">
-            <i class="bi bi-pencil-fill" (click)="selecionar(linha)"></i>
+            <i class="bi bi-pencil-fill" (click)="selecionar(linha, content)"></i>
           </button>
           <button type="button" class="btn btn-danger">
             <i class="bi bi-trash-fill" (click)="excluir(linha)"></i>
@@ -49,28 +49,29 @@
     </tbody>
   </table>
 </div>
-<!--
-<ng-template #add let-modal>
+<ng-template #content let-modal>
   <div class="modal-header">
-    <h4 class="modal-title">Cadastrar departamento</h4>
-    <button type="button" class="close" aria-label="Close">
+    <h4 class="modal-title">Departamento</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <form method="POST" #frm="ngForm" (ngSubmit)="adicionar(frm)">
-    <div class="modal-body">
-      <div class="mb-3">
-        <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento"  name= "departamento.nome" ngModel required/>
+  <div class="modal-body">
+    <form method="POST" #frm="ngForm" (ngSubmit)="salvar(frm)">
+      <div class="form-group">
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento" name="nome"
+            [(ngModel)]="departamento.nome" value="{{departamentos.nome}}" required />
+        </div>
+        <div class="mb-3">
+          <label for="sigla" class="form-label">Sigla</label>
+          <input type="text" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name="sigla"
+            [(ngModel)]="departamento.sigla" value="{{departamentos.sigla}}" required>
+        </div>
       </div>
-      <div class="mb-3">
-        <label for="sigla" class="form-label">Sigla</label>
-        <input type="email" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name= "departamento.sigla" ngModel required>
-      </div>
-    </div>
-
-    <div class="modal-footer">
       <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
-    </div>
-  </form>
-</ng-template> -->
+    </form>
+  </div>
+
+</ng-template>

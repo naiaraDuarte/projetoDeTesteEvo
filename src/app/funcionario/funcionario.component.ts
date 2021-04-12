@@ -90,7 +90,8 @@ export class FuncionarioComponent implements OnInit {
     });
   }
 
-  selecionar(el){
+  selecionar(el, content){
+    this.modalService.open(content, { centered: true });
     this.id = parseInt(el.dataset.funcionarioid);
     console.log("id", this.id);
     this.CrudService.selecionaComId(this.id).subscribe((data: Mfuncionario) => {
@@ -125,5 +126,10 @@ export class FuncionarioComponent implements OnInit {
   public createImgPath = (serverPath: string) => {
     return `https://localhost:44363/${serverPath}`;
   }
+
+  openVerticallyCentered(content) {
+    this.modalService.open(content, { centered: true });
+  }
+
 
 }

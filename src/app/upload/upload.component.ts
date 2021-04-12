@@ -7,7 +7,7 @@ import { HttpEventType, HttpClient } from '@angular/common/http';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-
+  urlImagem: string = "/assets/img/default.jpg";
   public progress: number;
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
@@ -15,6 +15,8 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
   }
   public uploadFile = (files) => {
+
+
     if (files.length === 0) {
       return;
     }
