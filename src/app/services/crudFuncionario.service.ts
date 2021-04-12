@@ -12,7 +12,7 @@ export class CrudFuncionarioService {
 constructor(private http: HttpClient) { }
 
 public getFuncionarios(DepartamentoId): Observable<any>{
-  return this.http.get(this.funcionarioUrl + '/teste/' + DepartamentoId);
+  return this.http.get(this.funcionarioUrl + '/porDepartamento/' + DepartamentoId);
 }
 
 public addFuncionario(funcionario: any){
@@ -23,16 +23,24 @@ public addFuncionario(funcionario: any){
 
   console.log(funcionario);
 
-  return this.http.post("https://localhost:44363/api/Funcionarios", funcionario);
+  return this.http.post(this.funcionarioUrl, funcionario);
 }
 
-public atualiza(departamento: any, id:number): Observable<any>{
-  departamento.DepartamentoId = id;
-  console.log("Departamento", this.funcionarioUrl + '/' + id, departamento);
+public atualiza(funcionario: any, id:number): Observable<any>{
+  funcionario.DepartamentoId = id;
+  console.log("Departamento", this.funcionarioUrl + '/' + id, funcionario);
   const HttpHeader = new HttpHeaders({
     'content-type': 'application/json'
   })
 
-  return this.http.put(this.funcionarioUrl + '/' + id, departamento, {headers: HttpHeader});
+  return this.http.put(this.funcionarioUrl + '/' + id, funcionario, {headers: HttpHeader});
+}
+
+public selecionaComId(id): Observable<any>{
+  return this.http.get(this.funcionarioUrl + '/' + id);
+}
+
+public excluirFuncionario(id){
+  return this.http.delete(this.funcionarioUrl + '/' + id);
 }
 }

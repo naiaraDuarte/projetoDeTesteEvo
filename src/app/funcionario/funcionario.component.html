@@ -2,12 +2,12 @@
   <div class="form-group">
     <div class="mb-3">
       <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" placeholder="Digite o nome do departamento" name="Nome"
+      <input type="text" class="form-control" id="nome" placeholder="Digite o nome do funcionario" name="Nome"
         [(ngModel)]="funcionario.nome" value="{{funcionario.Nome}}" required />
     </div>
     <div class="mb-3">
       <label for="rg" class="form-label">Rg</label>
-      <input type="text" class="form-control" id="rg" placeholder="Digite o sigla do departamento" name="rg"
+      <input type="text" class="form-control" id="rg" placeholder="Digite o rg do funcionario" name="rg"
         [(ngModel)]="funcionario.rg" value="{{funcionario.Rg}}" required>
     </div>
     <app-upload></app-upload>
@@ -27,7 +27,7 @@
 </form>
 
 <div class="container tabela">
-  <h2 class="titulo"><i class="bi bi-chevron-double-right icone"></i>Departamento</h2>
+  <h2 class="titulo"><i class="bi bi-chevron-double-right icone"></i>Funcionario</h2>
   <!-- <button class="btn btn-outline-primary mb-2 mr-2 adicionar" (click)="modal(add)">Add</button> -->
   <hr />
   <table class="table table-borderless">
@@ -41,7 +41,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr  #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId">
+      <tr  #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId" (click)="selecionar($event)">
         <th scope="row">{{i.funcionarioId}}</th>
         <td>{{i.foto}}</td>
         <td>{{i.nome}}</td>

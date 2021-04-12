@@ -89,11 +89,27 @@ export class FuncionarioComponent implements OnInit {
   }
 
   selecionar(el){
+    this.id = parseInt(el.dataset.funcionarioid);
+    console.log("id", this.id);
+    this.CrudService.selecionaComId(this.id).subscribe((data: Mfuncionario) => {
+      console.log("seleciona", data);
+      this.funcionario = data;
 
+    }, (error: any) => {
+      this.erro = error;
+      console.error(error);
+    });
   }
 
   excluir(el){
-
+    this.id = parseInt(el.dataset.funcionarioid);
+    this.CrudService.excluirFuncionario(this.id).subscribe((data: Mfuncionario) => {
+      this.funcionarios = data;
+      this.ObterRegistros();
+    }, (error: any) => {
+      this.erro = error;
+      console.error(error);
+    });
   }
 
 }
