@@ -79,6 +79,7 @@ export class FuncionarioComponent implements OnInit {
   }
 
   atualizar(frm){
+    this.funcionario.foto = this.response;
     this.CrudService.atualiza(this.funcionario, this.id).subscribe((data) => {
       this.id = null;
       this.ObterRegistros();

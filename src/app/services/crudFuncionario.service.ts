@@ -27,7 +27,7 @@ public addFuncionario(funcionario: any){
 }
 
 public atualiza(funcionario: any, id:number): Observable<any>{
-  funcionario.DepartamentoId = id;
+  funcionario.funcionarioId = id;
   console.log("Departamento", this.funcionarioUrl + '/' + id, funcionario);
   const HttpHeader = new HttpHeaders({
     'content-type': 'application/json'
