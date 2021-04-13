@@ -1,12 +1,18 @@
 .container.tabela{
-    max-width: 1500px;
-    margin: 100px 95px;
+    max-width: 1200px;
+    margin: 10px 14%;
     box-shadow: 0 0 1em gray;
     padding: 3% 3%;
 }
 .table-borderless{
   margin-top: 2%;
   margin-left: 5%;
+}
+
+tr {
+  text-align: center;
+  vertical-align: middle;
+  height: 6vh;
 }
 .icone {
   font-size: 1.5rem;
@@ -36,5 +42,9 @@
 .light-blue-backdrop {
   background-color: #5cb3fd;
 }
-
+.btn-modal{
+  position: relative;
+  float: right;
+  right: 8%;
+}
 

@@ -1,14 +1,13 @@
-.container.tabela {
+.container.tabela{
   max-width: 1200px;
-  margin: 100px 14%;
-  box-shadow: 0 0 1em #062a5e;
-  padding: 0% 0% 3% 0%;
+  margin: 10px 14%;
+  box-shadow: 0 0 1em gray;
+  padding: 3% 3%;
 }
-.tabelaTeste{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1%;
+
+.table-borderless{
+  margin-top: 2%;
+  margin-left: 5%;
 }
 
 tr {
@@ -16,57 +15,35 @@ tr {
   vertical-align: middle;
   height: 6vh;
 }
-.topo {
-  padding: 4%;
-  position: relative;
-  height: 12vh;
-  background-color:#062a5e;
-  /* clip-path: polygon(0 0, 100% 0, 100% 100%, 83% 86%, 66% 79%, 50% 78%, 27% 79%, 10% 88%, 0 100%); */
-}
-
-.table-borderless {
-  margin-top: 2%;
-  margin-left: 5%;
-  margin: 3% 8%;
-}
-
 .icone {
   font-size: 1.5rem;
   margin-right: 1%;
 }
-
-.titulo {
-  color: #f8f8ff;
-  position: absolute;
-  width: 100%;
-  top: 35%;
+.titulo{
+  color: #666666;
 }
-
-.acoes button {
+.acoes button{
   margin: 1%;
 }
 
-.adicionar {
+.adicionar{
   position: absolute;
-  float: right;
-  right: 15%;
-  top: 24%;
+    float: right;
+    right: 15%;
+    top: 24%;
 }
 
 .dark-modal .modal-content {
   background-color: #292b2c;
   color: white;
 }
-
 .dark-modal .close {
   color: white;
 }
-
 .light-blue-backdrop {
   background-color: #5cb3fd;
 }
-
-.btn-modal {
+.btn-modal{
   position: relative;
   float: right;
   right: 8%;
