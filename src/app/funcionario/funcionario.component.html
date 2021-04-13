@@ -1,63 +1,41 @@
-<!-- <form method="POST" #frm="ngForm" (ngSubmit)="salvar(frm)">
-  <div class="form-group">
-    <div class="mb-3">
-      <label for="nome" class="form-label">Nome</label>
-      <input type="text" class="form-control" id="nome" placeholder="Digite o nome do funcionario" name="Nome"
-        [(ngModel)]="funcionario.nome" value="{{funcionario.Nome}}" required />
-    </div>
-    <div class="mb-3">
-      <label for="rg" class="form-label">Rg</label>
-      <input type="text" class="form-control" id="rg" placeholder="Digite o rg do funcionario" name="rg"
-        [(ngModel)]="funcionario.rg" value="{{funcionario.Rg}}" required>
-    </div>
-    <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
-    <!-- <div class="mb-3">
-      <label for="foto" class="form-label">Foto</label>
-      <input type="text" class="form-control" id="foto" placeholder="Digite o sigla do departamento" name="foto"
-        [(ngModel)]="funcionario.Foto" value="{{funcionario.Foto}}" required>
-    </div>
-    <img [src]="urlImagem"  style="width: 250px; height: 200px;" alt="image" />
-    <div class="mb-3">
-      <label for="escolherFoto">Escolha uma foto:</label>
-      <input type="file" class="form-control-file btn btn-primary" id="escolherFoto" accept="image/*" (change)="carregarImagem($event.target.files)">
-    </div>
-  </div>
-
-  <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
-</form> -->
-
 <div class="container tabela">
-  <h2 class="titulo"><i class="bi bi-chevron-double-right icone"></i>Funcionario</h2>
-  <button class="btn btn-lg btn-outline-primary" (click)="openVerticallyCentered(content)">Add</button>
-  <hr />
-  <table class="table table-borderless">
-    <thead>
-      <tr>
-        <th scope="col titulo">Id</th>
-        <th scope="col titulo">Foto</th>
-        <th scope="col titulo">Nome</th>
-        <th scope="col titulo">Rg</th>
-        <th scope="col titulo">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr  #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId" (click)="selecionar($event)">
-        <th scope="row">{{i.funcionarioId}}</th>
-        <td><img [src]="createImgPath(i.foto)" alt="profile picture" style="width:60px; height:60px;"></td>
-        <td>{{i.nome}}</td>
-        <td>{{i.rg}}</td>
-        <td class="acoes">
-          <button type="button" class="btn btn-secondary">
-            <i class="bi bi-pencil-fill" (click)="selecionar(linha, content)"></i>
-          </button>
-          <button type="button" class="btn btn-danger">
-            <i class="bi bi-trash-fill" (click)="excluir(linha)" ></i>
-          </button>
-          {{ i.text }}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="topo">
+    <h2 class="titulo">
+      <i class="bi bi-chevron-double-right icone"></i>
+      Funcionario
+      <button class="btn btn-lg btn-outline-light btn-modal" (click)="openVerticallyCentered(content)">Add</button>
+    </h2>
+  </div>
+  <div class="tabelaTeste">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col titulo">Foto</th>
+          <th scope="col titulo">Id</th>
+          <th scope="col titulo">Nome</th>
+          <th scope="col titulo">Rg</th>
+          <th scope="col titulo">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId">
+          <td><img [src]="createImgPath(i.foto)" alt="profile picture" style="width:120px; height:100px;"></td>
+          <th scope="row">{{i.funcionarioId}}</th>
+          <td>{{i.nome}}</td>
+          <td>{{i.rg}}</td>
+          <td class="acoes">
+            <button type="button" class="btn btn-secondary">
+              <i class="bi bi-pencil-fill" (click)="selecionar(linha, content)"></i>
+            </button>
+            <button type="button" class="btn btn-danger">
+              <i class="bi bi-trash-fill" (click)="excluir(linha)"></i>
+            </button>
+            {{ i.text }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <ng-template #content let-modal>
@@ -98,4 +76,3 @@
   </div>
 
 </ng-template>
-

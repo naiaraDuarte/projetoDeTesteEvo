@@ -8,15 +8,26 @@ import { HttpEventType, HttpClient } from '@angular/common/http';
 })
 export class UploadComponent implements OnInit {
   urlImagem: string = "/assets/img/default.jpg";
+  imagemSelecionada : File = null;
   public progress: number;
   public message: string;
   @Output() public onUploadFinished = new EventEmitter();
   constructor(private http: HttpClient) { }
   ngOnInit() {
   }
+
+  carregarImagem(file: FileList){
+    this.imagemSelecionada = file.item(0);
+
+    var reader = new FileReader();
+    reader.onload = (event: any) =>{
+      this.urlImagem = event.target.result;
+    }
+    reader.readAsDataURL(this.imagemSelecionada);
+  }
   public uploadFile = (files) => {
 
-
+    this.carregarImagem(files);
     if (files.length === 0) {
       return;
     }
