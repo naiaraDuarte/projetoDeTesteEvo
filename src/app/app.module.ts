@@ -9,9 +9,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UploadComponent } from './upload/upload.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
       FuncionarioComponent,
       DepartamentoComponent,
@@ -22,7 +23,10 @@ import { UploadComponent } from './upload/upload.component';
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgxMaskModule.forRoot({
+      dropSpecialCharacters: true
+    }),
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

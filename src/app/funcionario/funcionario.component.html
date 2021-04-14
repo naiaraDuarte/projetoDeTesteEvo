@@ -4,7 +4,7 @@
     <h2 class="titulo">
       <i class="bi bi-chevron-double-right icone"></i>
       Funcionario
-      <button class="btn btn-lg btn-outline-light btn-modal" (click)="openVerticallyCentered(content)">Add</button>
+      <button class="btn btn-lg btn-outline-primary btn-modal" (click)="abrirModal(content)">Add</button>
     </h2>
   </div>
   <div class="tabelaTeste">
@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <tr  #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId">
-          <td><img [src]="createImgPath(i.foto)" alt="profile picture" style="width:120px; height:100px;"></td>
+          <td><img [src]="criarPathImg(i.foto)" alt="profile picture" style="width:120px; height:100px;"></td>
           <th scope="row">{{i.funcionarioId}}</th>
           <td>{{i.nome}}</td>
           <td>{{i.rg}}</td>
@@ -57,19 +57,9 @@
         <div class="mb-3">
           <label for="rg" class="form-label">Rg</label>
           <input type="text" class="form-control" id="rg" placeholder="Digite o rg do funcionario" name="rg"
-            [(ngModel)]="funcionario.rg" value="{{funcionario.Rg}}" required>
+            [(ngModel)]="funcionario.rg" value="{{funcionario.Rg}}" mask="00.000.00-00" required>
         </div>
-        <app-upload (onUploadFinished)="uploadFinished($event)"></app-upload>
-        <!-- <div class="mb-3">
-          <label for="foto" class="form-label">Foto</label>
-          <input type="text" class="form-control" id="foto" placeholder="Digite o sigla do departamento" name="foto"
-            [(ngModel)]="funcionario.Foto" value="{{funcionario.Foto}}" required>
-        </div>
-        <img [src]="urlImagem"  style="width: 250px; height: 200px;" alt="image" />
-        <div class="mb-3">
-          <label for="escolherFoto">Escolha uma foto:</label>
-          <input type="file" class="form-control-file btn btn-primary" id="escolherFoto" accept="image/*" (change)="carregarImagem($event.target.files)">
-        </div> -->
+        <app-upload (onUploadFinished)="uploadConcluido($event)"></app-upload>
       </div>
 
       <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>

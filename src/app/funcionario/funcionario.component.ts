@@ -8,128 +8,119 @@ import { Mfuncionario } from '../models/funcionario.models';
 @Component({
   selector: 'app-funcionario',
   templateUrl: './funcionario.component.html',
-  styleUrls: ['./funcionario.component.css']
+  styleUrls: ['./funcionario.component.css'],
 })
 export class FuncionarioComponent implements OnInit {
-
-  urlImagem: string = "/assets/img/default.jpg";
-  imagemSelecionada : File = null;
-  funcionarios:any;
-  erro: any;
-  data: Array<any>;
-  closeResult: string;
+  urlImagem: string = '/assets/img/default.jpg';
+  imagemSelecionada: File = null;
+  funcionarios: any;
   funcionario: any;
   id: number = null;
-  DepartamentoId: number;
-  response = '';
+  departamentoId: number;
+  foto = '';
 
-  constructor(private CrudService: CrudFuncionarioService, private modalService: NgbModal, private route: ActivatedRoute) {
-    this.DepartamentoId = parseInt(this.route.snapshot.paramMap.get('id'));
+  constructor(
+    private CrudService: CrudFuncionarioService,
+    private modalService: NgbModal,
+    private route: ActivatedRoute
+  ) {
+    this.departamentoId = parseInt(this.route.snapshot.paramMap.get('id'));
     this.ObterRegistros();
   }
 
   ngOnInit() {
     this.funcionario = {};
     this.funcionario.funcionarioId = this.id;
-    this.funcionario.departamentoId = this.DepartamentoId;
-
+    this.funcionario.departamentoId = this.departamentoId;
   }
 
-  carregarImagem(file: FileList){
-    this.imagemSelecionada = file.item(0);
-
-    var reader = new FileReader();
-    reader.onload = (event: any) =>{
-      this.urlImagem = event.target.result;
-    }
-    reader.readAsDataURL(this.imagemSelecionada);
+  ObterRegistros() {
+    this.CrudService.getFuncionario(this.departamentoId).subscribe(
+      (data: Mfuncionario) => {
+        console.log(data);
+        this.funcionarios = data;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  ObterRegistros(){
-    console.log(this.DepartamentoId);
-    this.CrudService.getFuncionarios(this.DepartamentoId).subscribe((data: Mfuncionario) => {
-      console.log(data);
-      this.funcionarios = data;
-    }, (error: any) => {
-      this.erro = error;
-      console.error(error);
-    });
-
-  }
-
-
-  salvar(frm: FormGroup){
-    if(this.id == null){
+  salvar(frm: FormGroup) {
+    if (this.id == null) {
       this.adicionar(frm);
-    }else{
+    } else {
       this.atualizar(frm);
     }
-
+    this.foto = '';
   }
 
-  adicionar(frm){
-    this.funcionario.foto = this.response;
-    this.CrudService.addFuncionario(this.funcionario).subscribe((data) => {
-       this.funcionarios.push(data);
-      frm.reset();
-    }, (error: any) => {
-      this.erro = error;
-      console.error(error);
-    });
+  adicionar(frm) {
+    this.funcionario.foto = this.foto;
+    this.funcionario.funcionarioId = 0;
+    this.CrudService.postFuncionario(this.funcionario).subscribe(
+      (data) => {
+        this.funcionarios.push(data);
+        frm.reset();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  atualizar(frm){
-    this.funcionario.foto = this.response;
-    this.CrudService.atualiza(this.funcionario, this.id).subscribe((data) => {
-      this.id = null;
-      this.ObterRegistros();
-      frm.reset();
-    }, (error: any) => {
-      this.erro = error;
-      console.error(error);
-    });
+  atualizar(frm) {
+    this.funcionario.foto = this.foto;
+    this.CrudService.putFuncionario(this.funcionario, this.id).subscribe(
+      (data) => {
+        this.id = null;
+        this.ObterRegistros();
+        frm.reset();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  selecionar(el, content){
+  selecionar(el, content) {
     this.modalService.open(content, { centered: true });
     this.id = parseInt(el.dataset.funcionarioid);
-    console.log("id", this.id);
-    this.CrudService.selecionaComId(this.id).subscribe((data: Mfuncionario) => {
-      console.log("seleciona", data);
-      this.funcionario = data;
-
-    }, (error: any) => {
-      this.erro = error;
-      console.error(error);
-    });
+    this.CrudService.getFuncionarioWithId(this.id).subscribe(
+      (data: Mfuncionario) => {
+        console.log('seleciona', data);
+        this.funcionario = data;
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  excluir(el){
+  excluir(el) {
     this.id = parseInt(el.dataset.funcionarioid);
-    this.CrudService.excluirFuncionario(this.id).subscribe((data: Mfuncionario) => {
-      this.funcionarios = data;
-      this.id = null;
-      this.ObterRegistros();
-    }, (error: any) => {
-      this.erro = error;
-      console.error(error);
-    });
+    this.CrudService.deleteFuncionario(this.id).subscribe(
+      (data: Mfuncionario) => {
+        this.funcionarios = data;
+        this.id = null;
+        this.ObterRegistros();
+      },
+      (error: any) => {
+        console.error(error);
+      }
+    );
   }
 
-  public uploadFinished = (event) => {
+  public uploadConcluido = (event) => {
+    this.foto = event.dbPath;
+  };
 
-    this.response = event.dbPath;
-    console.log("URLLLLL", this.response);
-
-  }
-
-  public createImgPath = (serverPath: string) => {
+  public criarPathImg = (serverPath: string) => {
     return `https://localhost:44363/${serverPath}`;
-  }
+  };
 
-  openVerticallyCentered(content) {
+  abrirModal(content) {
+    this.id = null;
     this.modalService.open(content, { centered: true });
   }
-
-
 }

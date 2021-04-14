@@ -1,11 +1,8 @@
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { Mdepartamento } from './../models/departamento.models';
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from '../services/crud.service';
-import { NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { CrudService } from '../services/crudDepartamento.service';
+import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
-import { formatCurrency } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -15,9 +12,6 @@ import { Router } from '@angular/router';
 })
 export class DepartamentoComponent implements OnInit {
   departamentos:any;
-  erro: any;
-  data: Array<any>;
-  closeResult: string;
   departamento: any;
   id: number;
 
@@ -30,16 +24,10 @@ export class DepartamentoComponent implements OnInit {
     this.departamento.DepartamentoId = 0;
   }
 
-  redireciona(el){
-    this.id = parseInt(el.dataset.departamentoid);
-    this.router.navigate(['/funcionario', this.id]);
-  }
-
   ObterRegistros(){
-    this.CrudService.getDepartamentos().subscribe((data: Mdepartamento) => {
+    this.CrudService.getDepartamento().subscribe((data: Mdepartamento) => {
       this.departamentos = data;
     }, (error: any) => {
-      this.erro = error;
       console.error(error);
     });
 
@@ -55,26 +43,21 @@ export class DepartamentoComponent implements OnInit {
   }
 
   adicionar(frm){
-    this.CrudService.addDepartamentos(this.departamento).subscribe((data) => {
+    this.departamento.DepartamentoId = 0;
+    this.CrudService.postDepartamento(this.departamento).subscribe((data: Mdepartamento) => {
        this.departamentos.push(data);
       frm.reset();
     }, (error: any) => {
-      this.erro = error;
       console.error(error);
     });
   }
 
   atualizar(frm){
-    this.CrudService.atualiza(this.departamento, this.id).subscribe((data) => {
-      const atualizaIndex = data ? this.departamentos.findIndex( d => data.DepartamentoId == d.DepartamentoId): -1;
-      if(atualizaIndex > -1){
-        this.departamentos[atualizaIndex] = data;
-      }
+    this.CrudService.putDepartamento(this.departamento, this.id).subscribe((data) => {
       this.id = null;
       this.ObterRegistros();
       frm.reset();
     }, (error: any) => {
-      this.erro = error;
       console.error(error);
     });
   }
@@ -82,29 +65,30 @@ export class DepartamentoComponent implements OnInit {
   selecionar(el, content){
     this.modalService.open(content, { centered: true });
     this.id = parseInt(el.dataset.departamentoid);
-    console.log("id", this.id);
-    this.CrudService.selecionaComId(this.id).subscribe((data) => {
-      console.log("seleciona", data);
+    this.CrudService.getDepartamentoWithId(this.id).subscribe((data: Mdepartamento) => {
       this.departamento = data;
     }, (error: any) => {
-      this.erro = error;
       console.error(error);
     });
   }
 
   excluir(el){
     this.id = parseInt(el.dataset.departamentoid);
-    this.CrudService.excluirDepartamentos(this.id).subscribe((data: Mdepartamento) => {
+    this.CrudService.deleteDepartamento(this.id).subscribe((data: Mdepartamento) => {
       this.departamentos = data;
       this.ObterRegistros();
     }, (error: any) => {
-      this.erro = error;
       console.error(error);
     });
   }
 
-  openVerticallyCentered(content) {
-    this.modalService.open(content, { centered: true });
+  redirecionar(el){
+    this.id = parseInt(el.dataset.departamentoid);
+    this.router.navigate(['/funcionario', this.id]);
   }
 
+  abrirModal(content) {
+    this.id = null;
+    this.modalService.open(content, { centered: true });
+  }
 }
