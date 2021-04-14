@@ -52,7 +52,7 @@
         </div>
         <div class="mb-3">
           <label for="sigla" class="form-label">Sigla</label>
-          <input type="text" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" name="sigla"
+          <input type="text" class="form-control" id="sigla" placeholder="Digite o sigla do departamento" maxlength="5" name="sigla"
             [(ngModel)]="departamento.sigla" value="{{departamentos.sigla}}" required>
         </div>
       </div>

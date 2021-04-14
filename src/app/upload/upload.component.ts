@@ -8,18 +8,17 @@ import { HttpEventType, HttpClient } from '@angular/common/http';
   styleUrls: ['./upload.component.css'],
 })
 export class UploadComponent implements OnInit {
-  urlImagem: string = '/assets/img/default.jpg';
+  @Input() urlImagem: string;
   imagemSelecionada: File = null;
   progress: number;
   message: string;
-  @Input() imagemParaAlterar: string;
 
   @Output() public onUploadFinished = new EventEmitter();
 
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-
+    console.log(this.urlImagem);
   }
 
   carregarImagem(file: FileList) {
@@ -33,6 +32,7 @@ export class UploadComponent implements OnInit {
   }
 
   public uploadImagem = (files) => {
+    console.log(this.urlImagem);
     this.carregarImagem(files);
     if (files.length === 0) {
       return;
@@ -49,9 +49,22 @@ export class UploadComponent implements OnInit {
         if (data.type === HttpEventType.UploadProgress)
           this.progress = Math.round((100 * data.loaded) / data.total);
         else if (data.type === HttpEventType.Response) {
-          this.message = 'Imagem carregada...';
+          this.message = 'Imagem carregada';
           this.onUploadFinished.emit(data.body);
         }
       });
+  };
+
+  public criarPathImg = (serverPath: string) => {
+    console.log(serverPath);
+    var valor = "/assets/img/default.jpg";
+
+    if(serverPath == valor){
+      return serverPath;
+    }
+    else if(serverPath != ''){
+      return environment.urlDaApi +`${serverPath}`;
+
+    }
   };
 }

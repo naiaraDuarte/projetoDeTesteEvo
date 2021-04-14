@@ -59,7 +59,7 @@
           <input type="text" class="form-control" id="rg" placeholder="Digite o rg do funcionario" name="rg"
             [(ngModel)]="funcionario.rg" value="{{funcionario.Rg}}" mask="00.000.00-00" required>
         </div>
-        <app-upload (onUploadFinished)="uploadConcluido($event)"></app-upload>
+        <app-upload (onUploadFinished)="uploadConcluido($event)" [urlImagem]="funcionario.foto"></app-upload>
       </div>
 
       <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>

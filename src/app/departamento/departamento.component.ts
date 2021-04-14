@@ -88,6 +88,8 @@ export class DepartamentoComponent implements OnInit {
 
   abrirModal(content) {
     this.id = null;
+    this.departamento.nome = '';
+    this.departamento.sigla = '';
     this.modalService.open(content, { centered: true });
   }
 

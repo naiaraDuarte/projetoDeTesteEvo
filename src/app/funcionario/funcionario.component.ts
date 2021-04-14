@@ -12,7 +12,7 @@ import { Mfuncionario } from '../models/funcionario.models';
   styleUrls: ['./funcionario.component.css'],
 })
 export class FuncionarioComponent implements OnInit {
-  urlImagem: string = '/assets/img/default.jpg';
+  urlImagemTeste: string = '/assets/img/default.jpg';
   imagemSelecionada: File = null;
   funcionarios: any;
   funcionario: any;
@@ -39,7 +39,6 @@ export class FuncionarioComponent implements OnInit {
   ObterRegistros() {
     this.CrudService.getFuncionario(this.departamentoId).subscribe(
       (data: Mfuncionario) => {
-        console.log(data);
         this.funcionarios = data;
       },
       (error: any) => {
@@ -53,6 +52,7 @@ export class FuncionarioComponent implements OnInit {
       this.adicionar(frm);
     } else {
       this.atualizar(frm);
+
     }
     this.foto = '';
   }
@@ -91,8 +91,8 @@ export class FuncionarioComponent implements OnInit {
     this.CrudService.getFuncionarioWithId(this.id).subscribe(
       (data: Mfuncionario) => {
         this.funcionario = data;
-        console.log('seleciona', this.funcionario);
-        this.imagemParaAlterar = this.funcionario.foto;
+        this.urlImagemTeste = "https://localhost:44363/" + this.funcionario.foto;
+        console.log('seleciona', this.urlImagemTeste);
       },
       (error: any) => {
         console.error(error);
@@ -119,13 +119,16 @@ export class FuncionarioComponent implements OnInit {
 
   public criarPathImg = (serverPath: string) => {
     if(serverPath != ''){
-      return environment.urlDaApi + `${serverPath}`;
+      return environment.urlDaApi +`${serverPath}`;
     }
-    return this.urlImagem;
+    return this.urlImagemTeste;
   };
 
   abrirModal(content) {
     this.id = null;
+    this.funcionario.foto = '/assets/img/default.jpg';
+    this.funcionario.nome = '';
+    this.funcionario.rg = '';
     this.modalService.open(content, { centered: true });
   }
 
