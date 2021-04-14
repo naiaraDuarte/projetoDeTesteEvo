@@ -1,7 +1,7 @@
 import { environment } from './../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { CrudFuncionarioService } from '../services/crudFuncionario.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Mfuncionario } from '../models/funcionario.models';
@@ -20,6 +20,7 @@ export class FuncionarioComponent implements OnInit {
   departamentoId: number;
   foto = '';
   imagemParaAlterar: string = '';
+  closeResult = '';
 
   constructor(
     private CrudService: CrudFuncionarioService,
@@ -91,7 +92,7 @@ export class FuncionarioComponent implements OnInit {
     this.CrudService.getFuncionarioWithId(this.id).subscribe(
       (data: Mfuncionario) => {
         this.funcionario = data;
-        this.urlImagemTeste = "https://localhost:44363/" + this.funcionario.foto;
+        this.urlImagemTeste = environment.urlDaApi + this.funcionario.foto;
         console.log('seleciona', this.urlImagemTeste);
       },
       (error: any) => {
@@ -106,6 +107,7 @@ export class FuncionarioComponent implements OnInit {
         this.funcionarios = data;
         this.id = null;
         this.ObterRegistros();
+        this.getDismissReason(null);
       },
       (error: any) => {
         console.error(error);
@@ -135,6 +137,16 @@ export class FuncionarioComponent implements OnInit {
   modalConfirmacaoExcluir(content, el) {
     this.id = parseInt(el.dataset.funcionarioid);
     this.modalService.open(content);
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 }
 

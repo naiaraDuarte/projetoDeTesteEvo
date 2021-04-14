@@ -1,9 +1,9 @@
-
 <div class="container tabela">
   <div class="topo">
     <h2 class="titulo">
       <i class="bi bi-chevron-double-right icone"></i>
       Funcionario
+      <a [routerLink]="['/departamento']" class="voltar"><i class="bi bi-arrow-90deg-left"></i></a>
       <button class="btn btn-lg btn-outline-primary btn-modal" (click)="abrirModal(content)">Add</button>
     </h2>
   </div>
@@ -19,7 +19,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr  #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId">
+        <tr #linha *ngFor="let i of funcionarios" [attr.data-funcionarioId]="i.funcionarioId">
           <td><img [src]="criarPathImg(i.foto)" alt="profile picture" style="width:120px; height:100px;"></td>
           <th scope="row">{{i.funcionarioId}}</th>
           <td>{{i.nome}}</td>
@@ -62,7 +62,7 @@
         <app-upload (onUploadFinished)="uploadConcluido($event)" [urlImagem]="funcionario.foto"></app-upload>
       </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="frm.invalid">Salvar</button>
+      <button type="submit" class="btn btn-primary btn-salvar" [disabled]="frm.invalid">Salvar</button>
     </form>
   </div>
 
@@ -79,6 +79,7 @@
     <p>Deseja mesmo excluir esse funcionário?</p>
   </div>
   <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Cancelar</button>
     <button type="button" class="btn btn-danger" (click)="excluir()">Excluir</button>
   </div>
 </ng-template>

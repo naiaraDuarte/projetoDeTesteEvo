@@ -59,7 +59,7 @@ export class UploadComponent implements OnInit {
     console.log(serverPath);
     var valor = "/assets/img/default.jpg";
 
-    if(serverPath == valor){
+    if(serverPath == valor || serverPath.length > 1000){
       return serverPath;
     }
     else if(serverPath != ''){

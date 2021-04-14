@@ -1,13 +1,11 @@
 <div class="row" style="margin-bottom:15px;">
+  <img [src]="criarPathImg(urlImagem)"  style="width: 300px; height: 250px;" alt="image" />
   <div class="col-md-3">
-    <input type="file" #file placeholder="Choose file" (change)="uploadImagem(file.files)" style="display:none;" required>
+    <input type="file" #file accept="image/*" placeholder="Choose file" (change)="uploadImagem(file.files)" style="display:none;" required>
     <button type="button" class="btn btn-success" (click)="file.click()">Escolher Imagem</button>
   </div>
-  <img [src]="criarPathImg(urlImagem)"  style="width: 250px; height: 200px;" alt="image" />
+  <hr />
   <div class="col-md-4">
-    <span class="upload" *ngIf="progress > 0">
-      {{progress}}%
-    </span>
     <span class="upload" *ngIf="message">
       {{message}}
     </span>
