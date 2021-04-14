@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { Component, OnInit } from '@angular/core';
 import { CrudFuncionarioService } from '../services/crudFuncionario.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +19,7 @@ export class FuncionarioComponent implements OnInit {
   id: number = null;
   departamentoId: number;
   foto = '';
+  imagemParaAlterar: string = '';
 
   constructor(
     private CrudService: CrudFuncionarioService,
@@ -88,8 +90,9 @@ export class FuncionarioComponent implements OnInit {
     this.id = parseInt(el.dataset.funcionarioid);
     this.CrudService.getFuncionarioWithId(this.id).subscribe(
       (data: Mfuncionario) => {
-        console.log('seleciona', data);
         this.funcionario = data;
+        console.log('seleciona', this.funcionario);
+        this.imagemParaAlterar = this.funcionario.foto;
       },
       (error: any) => {
         console.error(error);
@@ -97,8 +100,7 @@ export class FuncionarioComponent implements OnInit {
     );
   }
 
-  excluir(el) {
-    this.id = parseInt(el.dataset.funcionarioid);
+  excluir() {
     this.CrudService.deleteFuncionario(this.id).subscribe(
       (data: Mfuncionario) => {
         this.funcionarios = data;
@@ -116,11 +118,20 @@ export class FuncionarioComponent implements OnInit {
   };
 
   public criarPathImg = (serverPath: string) => {
-    return `https://localhost:44363/${serverPath}`;
+    if(serverPath != ''){
+      return environment.urlDaApi + `${serverPath}`;
+    }
+    return this.urlImagem;
   };
 
   abrirModal(content) {
     this.id = null;
     this.modalService.open(content, { centered: true });
   }
+
+  modalConfirmacaoExcluir(content, el) {
+    this.id = parseInt(el.dataset.funcionarioid);
+    this.modalService.open(content);
+  }
 }
+

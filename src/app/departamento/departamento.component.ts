@@ -72,8 +72,7 @@ export class DepartamentoComponent implements OnInit {
     });
   }
 
-  excluir(el){
-    this.id = parseInt(el.dataset.departamentoid);
+  excluir(){
     this.CrudService.deleteDepartamento(this.id).subscribe((data: Mdepartamento) => {
       this.departamentos = data;
       this.ObterRegistros();
@@ -90,5 +89,10 @@ export class DepartamentoComponent implements OnInit {
   abrirModal(content) {
     this.id = null;
     this.modalService.open(content, { centered: true });
+  }
+
+  modalConfirmacaoExcluir(content, el) {
+    this.id = parseInt(el.dataset.departamentoid);
+    this.modalService.open(content);
   }
 }

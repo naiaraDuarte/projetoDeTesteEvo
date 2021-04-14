@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment.prod';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CrudFuncionarioService {
-  funcionarioUrl = 'https://localhost:44363/api/Funcionarios';
+  funcionarioUrl = environment.urlDaApi + 'api/Funcionarios';
 
   constructor(private http: HttpClient) {}
 

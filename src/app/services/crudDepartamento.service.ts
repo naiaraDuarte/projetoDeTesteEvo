@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -7,7 +8,7 @@ import { Mdepartamento } from '../models/departamento.models';
   providedIn: 'root',
 })
 export class CrudService {
-  departamentoUrl = 'https://localhost:44363/api/Departamentos';
+  departamentoUrl = environment.urlDaApi + 'api/Departamentos';
 
   constructor(private http: HttpClient) {}
 

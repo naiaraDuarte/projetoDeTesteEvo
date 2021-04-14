@@ -1,6 +1,6 @@
 <div class="row" style="margin-bottom:15px;">
   <div class="col-md-3">
-    <input type="file" #file placeholder="Choose file" (change)="uploadImagem(file.files)" style="display:none;">
+    <input type="file" #file placeholder="Choose file" (change)="uploadImagem(file.files)" style="display:none;" required>
     <button type="button" class="btn btn-success" (click)="file.click()">Escolher Imagem</button>
   </div>
   <img [src]="urlImagem"  style="width: 250px; height: 200px;" alt="image" />

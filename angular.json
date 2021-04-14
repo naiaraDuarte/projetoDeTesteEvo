@@ -68,6 +68,9 @@
             "browserTarget": "evoProjDep:build"
           },
           "configurations": {
+            "url": {
+              "browserTarget": "evoProjDep:build:urlDaApi"
+            },
             "production": {
               "browserTarget": "evoProjDep:build:production"
             }

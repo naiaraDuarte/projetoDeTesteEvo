@@ -1,4 +1,5 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { environment } from './../../environments/environment';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { HttpEventType, HttpClient } from '@angular/common/http';
 
 @Component({
@@ -11,12 +12,15 @@ export class UploadComponent implements OnInit {
   imagemSelecionada: File = null;
   progress: number;
   message: string;
+  @Input() imagemParaAlterar: string;
 
   @Output() public onUploadFinished = new EventEmitter();
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   carregarImagem(file: FileList) {
     this.imagemSelecionada = file.item(0);
@@ -37,7 +41,7 @@ export class UploadComponent implements OnInit {
     const formData = new FormData();
     formData.append('file', ImagemParaUpload, ImagemParaUpload.name);
     this.http
-      .post('https://localhost:44363/api/Upload', formData, {
+      .post(environment.urlDaApi + 'api/Upload', formData, {
         reportProgress: true,
         observe: 'events',
       })
@@ -45,7 +49,7 @@ export class UploadComponent implements OnInit {
         if (data.type === HttpEventType.UploadProgress)
           this.progress = Math.round((100 * data.loaded) / data.total);
         else if (data.type === HttpEventType.Response) {
-          this.message = 'Upload success.';
+          this.message = 'Imagem carregada...';
           this.onUploadFinished.emit(data.body);
         }
       });
